@@ -13,21 +13,21 @@ const httpClient = (url, options = {}) => {
 
 const dataProvider = {
     getList: (resource, params) => {
-        // const { page, perPage } = params.pagination;
+        const { page, perPage } = params.pagination;
         // const { field, order } = params.sort;
         // // const query = {
         // //     sort: JSON.stringify([field, order]),
         // //     range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
         // //     filter: JSON.stringify(params.filter),
         // // };
-        const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}`;
-        // const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}&skip=${
-        //     page || 0
-        // }${perPage ? `&limit=${perPage || ""}` : ""}`;
+        // const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}`;
+        const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}&skip=${
+            page || 0
+        }${perPage ? `&limit=${perPage || ""}` : ""}`;
         return httpClient(url).then(({ headers, json }) => {
             return {
-                data: json.data.filter((elem) => !elem.deletedStatus),
-                total: json.data.length,
+                data: json.data,
+                total: json.meta?.total || json.data.length,
             };
         });
     },
