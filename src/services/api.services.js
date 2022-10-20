@@ -11,6 +11,25 @@ const httpClient = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
+const deleter = (resource, params, multiple = false) => {
+    let url = apiUrl + "/" + resource + "/";
+    if (resource === "categories") {
+        url += `${params.id}`;
+    } else if (resource === "users") {
+        url += `suspend-user/${params.id}`;
+    } else if (resource === "trips") {
+        url += `admin/disable-trip/${params.id}`;
+    } else if (resource === "communities") {
+        url += `admin/deactivate-community/${params.id}`;
+    }
+    console.log({ params, url, resource });
+    return httpClient(url, {
+        method: "DELETE",
+    }).then(({ json }) =>
+        multiple ? { data: [json.data] } : { data: json.data }
+    );
+};
+
 const dataProvider = {
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
@@ -97,24 +116,9 @@ const dataProvider = {
             data: { ...params.data, id: json.data.id },
         })),
 
-    delete: (resource, params) => {
-        let url = apiUrl + "/" + resource + "/";
-        if (resource === "categories") {
-            url += `${params.id}`;
-        } else if (resource === "users") {
-            url += `suspend-user/${params.id}`;
-        } else if (resource === "trips") {
-            url += `admin/disable-trip/${params.id}`;
-        } else if (resource === "communitites") {
-            url += `admin/deactivate-community/${params.id}`;
-        }
-        console.log(params);
-        return httpClient(url, {
-            method: "DELETE",
-        }).then(({ json }) => ({ data: json.data }));
-    },
+    delete: (resource, params) => deleter(resource, params),
     deleteMany: (resource, params) => {
-        return Promise.reject();
+        return deleter(resource, { id: params.ids[0] }, true);
         const query = {
             filter: JSON.stringify({ id: params.ids }),
         };

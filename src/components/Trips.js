@@ -49,6 +49,7 @@ export const TripList = () => (
             <BooleanField source="deletedStatus" />
             <DateField source="createdDate" />
             <NumberField source="_count.bookedBy" />
+            <MyImageField source="image" />
         </Datagrid>
     </List>
 );
@@ -67,4 +68,22 @@ export const TripEdit = () => (
 const TripTitle = () => {
     const record = useRecordContext();
     return <span>Trip {record ? `"${record.name}"` : ""}</span>;
+};
+
+const MyImageField = ({ source }) => {
+    const record = useRecordContext();
+    if (record) {
+        return (
+            <ul style={{ display: "flex", gap: "10px" }}>
+                {record[source].map((elem) => (
+                    <li>
+                        <img src={elem} height="100" />
+                    </li>
+                ))}
+            </ul>
+        );
+    } else {
+        return null;
+    }
+    // return record ? <a href={record[source]}>{record[source]}</a> : null;
 };

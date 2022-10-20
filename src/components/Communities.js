@@ -16,6 +16,7 @@ import {
     SingleFieldList,
     ChipField,
     ReferenceField,
+    ImageField,
 } from "react-admin";
 
 export const CommunityList = () => (
@@ -47,6 +48,8 @@ export const CommunityList = () => (
             {/* <NumberField source="_count.managers" /> */}
             <NumberField source="_count.organizedTrips" />
             <NumberField source="_count.followers" />
+            <ImageField source="profile" title="Profile" />
+            <ImageField source="banner" title="Banner" />
         </Datagrid>
     </List>
 );

@@ -12,6 +12,7 @@ import {
     Edit,
     SimpleForm,
     useRecordContext,
+    ImageField,
 } from "react-admin";
 
 export const UserList = () => (
@@ -28,6 +29,8 @@ export const UserList = () => (
             <NumberField source="_count.createdCommunities" />
             <NumberField source="_count.followedCommunities" />
             <NumberField source="_count.organizedTrips" />
+            <ImageField source="profile" title="Profile" />
+            <ImageField source="banner" title="Banner" />
         </Datagrid>
     </List>
 );
