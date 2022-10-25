@@ -1,7 +1,7 @@
 import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 import { apiUrl } from "../constants";
-
+let allBookedTrips = [];
 const httpClient = (url, options = {}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: "application/json" });
@@ -40,9 +40,52 @@ const dataProvider = {
         // //     filter: JSON.stringify(params.filter),
         // // };
         // const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}`;
+        if (resource === "bookedTrips") {
+            if (allBookedTrips.length) {
+                let a = Promise.resolve({
+                    data: allBookedTrips.slice(
+                        (page - 1) * perPage,
+                        (page - 1) * perPage + perPage
+                    ),
+                    total: allBookedTrips.length,
+                });
+                return a;
+            } else {
+                const url = `${apiUrl}/trips?upcoming=true&detail=true`;
+                return httpClient(url).then(({ headers, json }) => {
+                    json.data.forEach((trip) =>
+                        trip.bookedBy.forEach((user) =>
+                            allBookedTrips.push({
+                                tripId: trip.id,
+                                communityId: trip.organizerId,
+                                ...user,
+                            })
+                        )
+                    );
+                    console.log(
+                        allBookedTrips,
+                        allBookedTrips.slice(
+                            (page - 1) * perPage,
+                            (page - 1) * perPage + perPage
+                        ),
+                        (page - 1) * perPage,
+                        (page - 1) * perPage + perPage,
+                        page - 1,
+                        perPage - 1
+                    );
+                    return {
+                        data: allBookedTrips.slice(
+                            (page - 1) * perPage,
+                            (page - 1) * perPage + perPage
+                        ),
+                        total: allBookedTrips.length,
+                    };
+                });
+            }
+        }
         const url = `${apiUrl}/${resource}?q=${params?.filter?.q || ""}&skip=${
-            page || 0
-        }${perPage ? `&limit=${perPage || ""}` : ""}`;
+            (page - 1) * perPage || 0
+        }${perPage ? `&limit=${perPage}` : ""}`;
         return httpClient(url).then(({ headers, json }) => {
             return {
                 data: json.data,

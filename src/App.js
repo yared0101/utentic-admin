@@ -17,8 +17,10 @@ import userIcon from "@mui/icons-material/Person";
 import communityIcon from "@mui/icons-material/Group";
 import tripIcon from "@mui/icons-material/TripOrigin";
 import categoryIcon from "@mui/icons-material/Category";
+import bookedTripIcon from "@mui/icons-material/Book";
 import { TripList } from "./components/Trips";
 import { CategoryEdit, CategoryList } from "./components/Categories";
+import { BookedUserEdit, BookedUserList } from "./components/BookedTrips";
 
 const App = () => {
     return (
@@ -51,6 +53,12 @@ const App = () => {
                 name="categories"
                 list={CategoryList}
                 edit={CategoryEdit}
+            />
+            <Resource
+                icon={bookedTripIcon}
+                name="bookedTrips"
+                list={BookedUserList}
+                edit={BookedUserEdit}
             />
             {/* <EditButton /> */}
         </Admin>
