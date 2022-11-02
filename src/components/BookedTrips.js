@@ -21,12 +21,13 @@ export const BookedUserList = () => (
         <Datagrid rowClick="edit">
             {/* <BooleanField source="deletedStatus" /> */}
             {/* <TextField source="username" /> */}
-            <ReferenceField source="tripId" reference="trips">
-                <TextField source="name" />
-            </ReferenceField>
-            <ReferenceField source="communityId" reference="communities">
-                <TextField source="name" />
-            </ReferenceField>
+
+            <TextField source="trip" />
+            <NumberField source="price" />
+            <NumberField source="discount" />
+            <NumberField source="net" />
+            <TextField source="community" />
+            <TextField source="contact" />
             <TextField source="firstName" />
             <TextField source="lastName" />
             <TextField source="phoneNumber" />

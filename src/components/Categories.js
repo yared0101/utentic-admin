@@ -16,6 +16,7 @@ import {
     SingleFieldList,
     ChipField,
     ReferenceField,
+    Create,
 } from "react-admin";
 
 export const CategoryList = () => (
@@ -36,6 +37,15 @@ export const CategoryEdit = () => (
             <TextInput source="description" />
         </SimpleForm>
     </Edit>
+);
+
+export const CategoryCreate = (props) => (
+    <Create {...props}>
+        <SimpleForm>
+            <TextInput source="name" />
+            <TextInput source="description" />
+        </SimpleForm>
+    </Create>
 );
 
 const CategoryTitle = () => {

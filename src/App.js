@@ -19,7 +19,11 @@ import tripIcon from "@mui/icons-material/TripOrigin";
 import categoryIcon from "@mui/icons-material/Category";
 import bookedTripIcon from "@mui/icons-material/Book";
 import { TripList } from "./components/Trips";
-import { CategoryEdit, CategoryList } from "./components/Categories";
+import {
+    CategoryCreate,
+    CategoryEdit,
+    CategoryList,
+} from "./components/Categories";
 import { BookedUserEdit, BookedUserList } from "./components/BookedTrips";
 
 const App = () => {
@@ -53,6 +57,7 @@ const App = () => {
                 name="categories"
                 list={CategoryList}
                 edit={CategoryEdit}
+                create={CategoryCreate}
             />
             <Resource
                 icon={bookedTripIcon}

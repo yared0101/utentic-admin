@@ -56,8 +56,12 @@ const dataProvider = {
                     json.data.forEach((trip) =>
                         trip.bookedBy.forEach((user) =>
                             allBookedTrips.push({
-                                tripId: trip.id,
-                                communityId: trip.organizerId,
+                                trip: trip.name,
+                                community: trip.organizer.name,
+                                price: trip.price,
+                                discount: trip.discountAmount,
+                                net: trip.price - trip.discountAmount,
+                                contact: trip.organizer.contactNumber,
                                 ...user,
                             })
                         )
