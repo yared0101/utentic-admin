@@ -1,1 +1,1 @@
-export const apiUrl = "https://utentic-back.herokuapp.com/api";
+export const apiUrl = "https://utentic-back.utentic.app/api";
